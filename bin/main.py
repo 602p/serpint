@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 
-ver=22
+ver=23
 
 print "SERPINT NETWORK GPIO TOOLKIT"
 print "           V"+str(ver)+"             "
@@ -273,16 +273,16 @@ try:
 		print "When it pauses, press enter, and in any popup windows that ask for your password, give it to them"
 		print
 		print "Now starting the GPIOTOSERIAL command"
-		print "running './serpint gpiotoserial ttyS44 1234'"
+		print "Running './serpint gpiotoserial ttyS44 1234'"
 		os.system("gnome-terminal -x sudo ./serpint gpiotoserial ttyS44 1234")
 		#time.sleep(3)
 		raw_input()
-		print "that window is waiting for a connection."
+		print "That window is waiting for a connection."
 		print "Now connecting..."
-		print "running './serping serialtosock ttyS44 1235'"
+		print "Running './serping serialtosock ttyS44 1235'"
 		os.system("gnome-terminal -x sudo ./serpint serialtosock ttyS44 1235")
 		raw_input()
-		print "now connecting to socket 1235 from python"
+		print "Now connecting to socket 1235 from python"
 		s = None
 		for res in socket.getaddrinfo('localhost', 1235, socket.AF_UNSPEC, socket.SOCK_STREAM):
 		    af, socktype, proto, canonname, sa = res
@@ -298,20 +298,21 @@ try:
 			s = None
 			continue
 		sock=s
-		print 'connected, sending an ok (0x02)'
+		print 'Connected, sending an ok (0x02)'
 		sock.send(chr(2))
-		print 'got back 0x'+str(hex(int(ord(sock.recv(1)))))
-		print 'connected and online! :)'
+		print 'Got back 0x'+str(hex(int(ord(sock.recv(1)))))
+		print 'Connected and online! :)'
 		time.sleep(7)
-		print 'closing'
+		print 'Closing'
 		sock.send(chr(3))
 		sock.recv(1)
 		sock.close()
 		print "Please close any other open windows, then press enter"
 		raw_input()
-		print "cleaning up"
-		print "running './serpint cleanup'"
+		print "Cleaning up"
+		print "Running './serpint cleanup'"
 		os.system("gnome-terminal -x sudo ./serpint cleanup")
+		raw_input()
 		print "Exiting"
 	else:
 		throw_error(11, 'No arguments specified; Use "serpint.py help" for information', 0)
