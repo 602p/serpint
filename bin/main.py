@@ -17,6 +17,7 @@
 #
 
 print "SERPINT NETWORK GPIO TOOLKIT"
+print "PLEASE USE ^C IF YOU NEED TO FORCE EXIT, ONLY USE ^Z IF YOU WANT TO EXIT WITHOUT CLEANUP"
 print
 
 try:
@@ -59,7 +60,7 @@ def loop_master_connection(conn): #Run the master GPIO command interpereter over
 		command=recvo(conn)
 		if command==3: #3 is shutdown
 			sendb(conn, 4) #4 is shutting down
-			#shutdown code would go here but this is handled by the main block
+			conn.close()
 			run=0
 		elif command==22: #22 is initilize pin as output
 			ext=recvo(conn) #read pin to be initilized as output
@@ -133,13 +134,10 @@ def vsi_system_sock(ser_addr, host, port): #create the system VSI socket with a 
 	except BaseException as e:
 		throw_error(6,e) #throw VSI_SYS_INIT_ERROR
 
-def remove_vsi(ser_addr, conn): #close a VSI
+def remove_vsi(ser_addr): #close a VSI
 	try:
-		print "Closing Socket..."
-		conn.close() #close the socket connection
-		print "Removing System Virtual Socket..."
-		os.system("sleep 3 && sudo rm -f /dev/"+ser_addr+" &") #wait, remove the virtual socket
-		print "VSI Removed... Please Note That That Your System May Still Have Traces Of VSI Usage Until You Reboot..." #you need to reboot to have a clean system
+		print "Removing VSI '"+ser_addr+"'..."
+		os.system("sudo rm -f /dev/"+ser_addr) #wait, remove the virtual socket
 	except BaseException as e:
 		throw_error(8,e) #error removing the VSI
 
@@ -181,9 +179,6 @@ def ser_to_sock_b(ser, sock): #read information from sock and write it to ser
 			print "Just relayed "+str(ord(i))+" from socket to serial"
 			if ord(i) in [3,4]:
 				print "Thread B ready for exit"
-				raw_input(
-				print "Calling shutdown VSI"
-				remove_VSI(ser.port, conn)
 				print "Interrupting main thread"
 				thread.interrupt_main()
 				break
@@ -236,19 +231,28 @@ try:
 	if sys.argv[1].upper()=="GPIOTOSERIAL":
 		conn=create_vsi(sys.argv[2], int(sys.argv[3])) #device(virtual), port
 		loop_master_connection(conn)
-		remove_vsi(sys.argv[2], conn)
 	elif sys.argv[1].upper()=="SERIALTOSOCK":
 		serial_to_socket(sys.argv[2], int(sys.argv[3])) #device, port
 	elif sys.argv[1].upper()=="SOCKTOSERIAL":
 		vsi_system_sock(sys.argv[2], sys.argv[3], int(sys.argv[4])) #device, host, port
 	elif sys.argv[1].upper()=="SERIALFORMATBRIDGE":
 		serial_format_bridge(sys.argv[2], int(sys.argv[3]), sys.argv[4], sys.argv[5]) #device, port, target device, module
+	elif sys.argv[1].upper()=="CLEANUP":
+		print "Scanning for virtual serial ports..."
+		for i in os.popen("ls /dev").readlines():
+			if i.startswith("ttyS"):
+				z=os.popen("stat /dev/"+i.strip("\n")+"|grep link").readline().strip("\n")
+				if z!="":
+					print "Cleaning port /dev/"+i.strip("\n")+" ..."
+					remove_vsi(i.strip('\n'))
+		print "Done"
 	elif sys.argv[1].upper()=="HELP": #show help
 		if len(sys.argv)==3:
 			if sys.argv[2].upper()=="DEVINFO":
 				os.system("cat ../doc/devinfo")
 		else:
 			os.system("cat ../doc/help")
+			
 	else:
 		throw_error(11, 'No arguments specified; Use "serpint.py help" for information', 0)
 		raw_input('Press enter to close')

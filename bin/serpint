@@ -3,3 +3,8 @@ import sys, os
 cmd=""
 for i in sys.argv[1:]:cmd=cmd+" "+i
 os.system("python main.py"+cmd)
+if len(sys.argv)>1:
+	if sys.argv[1].upper() in ['GPIOTOSERIAL','SERIALTOSOCK','SOCKTOSERIAL','SERIALFORMATBRIDGE']:
+		print "Cleaning up...."
+		os.system("python main.py cleanup")
+print "EXIT"
