@@ -138,7 +138,7 @@ def remove_vsi(ser_addr, conn): #close a VSI
 		print "Closing Socket..."
 		conn.close() #close the socket connection
 		print "Removing System Virtual Socket..."
-		os.system("sudo rm -f /dev/"+ser_addr) #remove the virtual socket
+		os.system("sleep 3 && sudo rm -f /dev/"+ser_addr+" &") #wait, remove the virtual socket
 		print "VSI Removed... Please Note That That Your System May Still Have Traces Of VSI Usage Until You Reboot..." #you need to reboot to have a clean system
 	except BaseException as e:
 		throw_error(8,e) #error removing the VSI
