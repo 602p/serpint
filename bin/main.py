@@ -128,7 +128,7 @@ def vsi_system_sock(ser_addr, host, port): #create the system VSI socket with a 
 	try:
 		print "Opening VSI System Socket..."
 		time.sleep(3) #wait for the client to be ready/the socket to have finished
-		os.system("sudo ./remserial -d -r "+str(host)+" -p "+str(port)+" -l /dev/"+ser_addr+" /dev/ptmx &") #put out a call to remserial to create a virtual socket and connect it to host:port
+		os.system("sudo ./remserial_"+os.popen("arch").read().strip("\n")+" -d -r "+str(host)+" -p "+str(port)+" -l /dev/"+ser_addr+" /dev/ptmx &") #put out a call to remserial to create a virtual socket and connect it to host:port
 		print "System VSI Socket Online..."
 	except BaseException as e:
 		throw_error(6,e) #throw VSI_SYS_INIT_ERROR
