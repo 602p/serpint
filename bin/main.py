@@ -166,6 +166,9 @@ def ser_to_sock_a(ser, sock): #read information from ser and write it to sock
 			time.sleep(0.1)
 			i=ser.read(1)
 			print "Just relayed "+str(ord(i))+" from serial to socket"
+			if ord(i) in [3,4]:
+				print "Thread A ready for exit"
+				break
 			sock.send(i)
 		except BaseException as e:
 			throw_error(3,e)
@@ -176,6 +179,14 @@ def ser_to_sock_b(ser, sock): #read information from sock and write it to ser
 			time.sleep(0.1)
 			i=sock.recv(1)
 			print "Just relayed "+str(ord(i))+" from socket to serial"
+			if ord(i) in [3,4]:
+				print "Thread B ready for exit"
+				raw_input(
+				print "Calling shutdown VSI"
+				remove_VSI(ser.port, conn)
+				print "Interrupting main thread"
+				thread.interrupt_main()
+				break
 			ser.write(i)
 		except BaseException as e:
 			throw_error(2,e)
