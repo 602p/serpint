@@ -302,13 +302,13 @@ try:
 		print
 		print "Now starting the GPIOTOSERIAL command"
 		print "Running './serpint gpiotoserial ttyS44 1234'"
-		os.system("gnome-terminal -x sudo ./serpint gpiotoserial ttyS44 1234")
+		os.system("gnome-terminal -x sudo ./serpint gpiotoserial ttyS44 1234 &")
 		#time.sleep(3)
 		raw_input()
 		print "That window is waiting for a connection."
 		print "Now connecting..."
 		print "Running './serping serialtosock ttyS44 1235'"
-		os.system("gnome-terminal -x sudo ./serpint serialtosock ttyS44 1235")
+		os.system("gnome-terminal -x sudo ./serpint serialtosock ttyS44 1235 &")
 		raw_input()
 		print "Now connecting to socket 1235 from python"
 		s = None
@@ -343,7 +343,7 @@ try:
 		raw_input()
 		print "Exiting"
 	else:
-		throw_error(11, 'No arguments specified; Use "serpint.py help" for information', 0)
+		throw_error(11, "No arguments specified; Use 'serpint.py help' for information", 0)
 		raw_input('Press enter to close')
 except BaseException as e:
 	throw_error(11,str(e)+"----Use 'serpint.py help' for information") #This is a error meaning that the command line arguments werent interpereted correctly
