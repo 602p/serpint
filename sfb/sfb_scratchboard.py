@@ -52,7 +52,8 @@ def main(sock, ser):
 			sock.send(chr(int("00000100", 2)))
 			time.sleep(0.04)
 
-import sys, time, serial, socket
+import sys, time, socket
+import pyserial as serial
 
 def GPIOFORMAT_ping():return "IAMGPIOFORMAT"
 def GPIOFORMAT_run(port, ser_addr, ser_addr2, init_function):
