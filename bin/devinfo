@@ -19,3 +19,6 @@ GPIOFORMAT_run(sock [connection to socket that is connected to local VSI], ser [
 
 GPIOFORMAT_ping()
 	Checks if this is a Serpint GPIOFORMAT module, it needs to return "IAMGPIOFORMAT"
+
+main()
+	customary main formatter script
