@@ -3,7 +3,7 @@
 #
 #    Copyright (C) 2012  Louis Goessling <louis@goessling.com>
 #
-#    'GNU General Public Licence' and 'GNU General Public Licence 3' refer to the licence
+#    'GNU General Public Licence' and 'GNU General Public Licence 3' refers to the licence
 #     ../licences/licence.txt
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,147 +23,144 @@ try:
 	import socket, os, time, thread, sys, imp, gpio #This uses RPi.GPIO 1.0 so I dont have to compile it
 	import pyserial as serial
 except BaseException as e:
-	throw_error(1,e)
+	throw_error(1,e) #Cant find module error
 
-global version
-version=1
-
-def sendb(conn, byte, q=0):
+def sendb(conn, byte, q=0): #send chr(byte) over socket conn, and report if q[iet]=0
 	try:
 		if not q:print "SENDING: "+str(byte)
 		conn.send(chr(byte))
 	except BaseException as e:
-		throw_error(9,e)
+		throw_error(9,e) #TX (sending) error
 
-def recvo(conn, num=1, q=0):
+def recvo(conn, num=1, q=0): #read num bytes, then run ord() on them, and report if q[iet]=0
 	try:
 		i=ord(conn.recv(num))
 		if not q:print "RECIVED: "+str(i)
 		return i
 	except BaseException as e:
-		throw_error(10,e)
+		throw_error(10,e) #RX (reciving) error
 
-def loop_master_connection(conn):
+def loop_master_connection(conn): #Run the master GPIO command interpereter over the socket conn
 	run=1
 	got_OK=0
 	n=0
-	while not got_OK:
+	while not got_OK: #Loop until connected
 		n=n+1
 		print "CONNECTING (TRY "+str(n)+")"
-		sendb(conn, 1, 1)
+		sendb(conn, 1, 1) #Send a 1 (acknowlage me!)
 		time.sleep(1)
-		i=recvo(conn, 1, 1)
-		if i==2:
-			got_OK=1
+		i=recvo(conn, 1, 1) #Check for
+		if i==2: #2, whitch is acknowlaged
+			got_OK=1 #Exit loop
 			print
 			print "got OK, client is connected"
 	while run:
 		#recive command
 		command=recvo(conn)
-		if command==3:
-			sendb(conn, 4)
+		if command==3: #3 is shutdown
+			sendb(conn, 4) #4 is shutting down
 			#shutdown code would go here but this is handled by the main block
 			run=0
-		elif command==22:
-			ext=recvo(conn)
+		elif command==22: #22 is initilize pin as output
+			ext=recvo(conn) #read pin to be initilized as output
 			try:
 				print "Initilizing pin "+str(ext)+" as output"
 				gpio.setup(ext, gpio.OUT) #initilize as output
-				sendb(conn, 10)
+				sendb(conn, 10) #send back OK
 			except BaseException as e:
-				throw_error(4,e,0)
-				sendb(conn, 11)
-		elif command==23:
-			ext=recvo(conn)
+				throw_error(4,e,0) #Throw ERROR4_GPIO_ERROR, dont quit the program, this is recoverable
+				sendb(conn, 11) #Send back 11, error
+		elif command==23: #23 is init as input
+			ext=recvo(conn) #recive pin number to init
 			try:
 				print "Initilizing pin "+str(ext)+" as input"
 				gpio.setup(ext, gpio.IN) #initilize as input
 				sendb(conn, 10)
 			except BaseException as e:
-				throw_error(4,e,0)
+				throw_error(4,e,0) #Throw error
 				sendb(conn, 11)
-		elif command==24:
-			ext=recvo(conn)
+		elif command==24: #24 is read from pin
+			ext=recvo(conn) #recive pin to read from
 			try:
 				print "Reading value from pin "+str(ext)
 				sendb(conn, gpio.input(ext)) #read value and send
-				sendb(conn, 10)
+				sendb(conn, 10) 
 			except BaseException as e:
-				throw_error(4,e,0)
+				throw_error(4,e,0) #Throw error, send 0 value in place of being read, send 11 so they know an error occoured, not just value is 0
 				sendb(conn, 0)
 				sendb(conn, 11)
-		elif command==25:
-			ext=recvo(conn)
+		elif command==25: #25 is turn pin on
+			ext=recvo(conn) #recive pin# to turn on
 			try:
 				print "Turning pin "+str(ext)+" on"
 				gpio.output(ext, 1) #turn on
 				sendb(conn, 10)
 			except BaseException as e:
-				throw_error(4,e,0)
+				throw_error(4,e,0) #throw error
 				sendb(conn, 11)
-		elif command==26:
-			ext=recvo(conn)
+		elif command==26: #26 is turn pin off
+			ext=recvo(conn) #recive pin# to turn off
 			try:
 				print "Turning pin "+str(ext)+" on"
 				gpio.output(ext, 0) #turn off
 				sendb(conn, 10)
 			except BaseException as e:
-				throw_error(4,e,0)
+				throw_error(4,e,0) #throw error
 				sendb(conn, 11)
-		elif command==30:
+		elif command==30: #30 is a keepalive/ping signal, send back 10 (OK) so they know we are alive
 			print "Client sent keep-alive/ ping"
 			sendb(conn, 10)
 
-def create_vsi(ser_addr, port):
+def create_vsi(ser_addr, port): #Create a Virtual Socket Interface, bolth system and client
 	try:
-		sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket and bind to localhost:port
 		sock.bind(("", port))
 		print "Opening VSI Client Socket..."
-		thread.start_new_thread(sock.listen, (1,))
-		vsi_system_sock(ser_addr,"localhost", port)
-		conn, addr=sock.accept()
+		thread.start_new_thread(sock.listen, (1,)) #start a new thread listening for connections
+		vsi_system_sock(ser_addr,"localhost", port) #call vsi_system_sock to open the system VSI
+		conn, addr=sock.accept() # accept connection, get conn, addr
 		print "Connection Established... Address: ", addr
-		return conn
+		return conn #return connection that is controlling the Virtual Socket
 	except BaseException as e:
-		throw_error(5,e)
+		throw_error(5,e) #throw VSI_INIT_ERROR
 
-def vsi_system_sock(ser_addr, host, port):
+def vsi_system_sock(ser_addr, host, port): #create the system VSI socket with a call to remserial
 	try:
 		print "Opening VSI System Socket..."
-		time.sleep(1)
-		os.system("sudo ./remserial -d -r "+str(host)+" -p "+str(port)+" -l /dev/"+ser_addr+" /dev/ptmx &")
+		time.sleep(3) #wait for the client to be ready/the socket to have finished
+		os.system("sudo ./remserial -d -r "+str(host)+" -p "+str(port)+" -l /dev/"+ser_addr+" /dev/ptmx &") #put out a call to remserial to create a virtual socket and connect it to host:port
 		print "System VSI Socket Online..."
 	except BaseException as e:
-		throw_error(6,e)
+		throw_error(6,e) #throw VSI_SYS_INIT_ERROR
 
-def remove_vsi(ser_addr, conn):
+def remove_vsi(ser_addr, conn): #close a VSI
 	try:
 		print "Closing Socket..."
-		conn.close()
+		conn.close() #close the socket connection
 		print "Removing System Virtual Socket..."
-		os.system("sudo rm /dev/"+ser_addr)
-		print "VSI Removed... Please Note That That Your System May Still Have Traces Of VSI Usage Until You Reboot..."	
+		os.system("sudo rm -f /dev/"+ser_addr) #remove the virtual socket
+		print "VSI Removed... Please Note That That Your System May Still Have Traces Of VSI Usage Until You Reboot..." #you need to reboot to have a clean system
 	except BaseException as e:
-		throw_error(8,e)
+		throw_error(8,e) #error removing the VSI
 
-def serial_to_socket(ser_addr, port):
+def serial_to_socket(ser_addr, port): #forward data from a virtual serial port to a socket, I would use remserial, but it only works with proper (non-virtual) serial ports
 	try:
-		ser=serial.Serial("/dev/"+ser_addr)
+		ser=serial.Serial("/dev/"+ser_addr) #open the serial port
 		ser.open()
-		sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open and bind the socket
 		sock.bind(("", port))
 		sock.listen(1)
-		print "Waiting for remote connection to socket..."
+		print "Waiting for remote connection to socket..." #wait for the other machine to run SOCKTOSERIAL
 		conn, addr=sock.accept()
 		print "Got connection!"
 	except BaseException as e:
-		throw_error(7,e)
-	thread.start_new_thread(ser_to_sock_a, (ser, conn))
-	time.sleep(0.1)
-	thread.start_new_thread(ser_to_sock_b, (ser, conn))
-	while 1:pass
+		throw_error(7,e) #error initilizing
+	thread.start_new_thread(ser_to_sock_a, (ser, conn)) #start thread a (forwarding from serial to socket)
+	time.sleep(0.1) #slight delay to keep the serial port psuedo-threadsafe
+	thread.start_new_thread(ser_to_sock_b, (ser, conn)) #start thread b (forwarding from socket to serial)
+	while 1:pass #keep running, as not to close the process with still-running threads
 
-def ser_to_sock_a(ser, sock):
+def ser_to_sock_a(ser, sock): #read information from ser and write it to sock
 	while 1:
 		try:
 			time.sleep(0.1)
@@ -173,7 +170,7 @@ def ser_to_sock_a(ser, sock):
 		except BaseException as e:
 			throw_error(3,e)
 
-def ser_to_sock_b(ser, sock):
+def ser_to_sock_b(ser, sock): #read information from sock and write it to ser
 	while 1:
 		try:
 			time.sleep(0.1)
@@ -183,7 +180,7 @@ def ser_to_sock_b(ser, sock):
 		except BaseException as e:
 			throw_error(2,e)
 
-def serial_format_bridge(ser_addr, port, ser_addr2, modulepath):
+def serial_format_bridge(ser_addr, port, ser_addr2, modulepath): #create a bridge between one VSI and another so that the data can be reformatted from "raw" GPIO interpreter data to formatted data that would be useful for other programs
 	try:
 		module=imp.load_source("module", modulepath) #Use imp to import the child module
 	except BaseException as e:
