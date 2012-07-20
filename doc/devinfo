@@ -1,0 +1,24 @@
+------------------------------------Default GPIO format-----------------------------------------
+1: Begin
+2: OK, Beginning
+3: Shutdown
+4: OK, Shutting Down
+10:OK
+11:Error
+22:Initilize next byte pin as input
+23:Initilize next byte pin as output
+24:Send back value of next byte pin
+25:Set value of next byte pin on
+26:Set value of next byte pin off
+30:Keep-alive/ Ping
+
+------------------------------------SERIALFORMATBRIDGE format.py file outline-------------------
+
+GPIOFORMAT_run(sock [connection to socket that is connected to local VSI], ser [connection to "live" local VSI])
+	This does all of the format interpretation and such. It acts as a relay between sock and ser, but also interperets the format.
+
+GPIOFORMAT_ping()
+	Checks if this is a Serpint GPIOFORMAT module, it needs to return "IAMGPIOFORMAT"
+
+main()
+	customary main formatter script
