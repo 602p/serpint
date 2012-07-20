@@ -232,13 +232,19 @@ try:
 		vsi_system_sock(sys.argv[2], sys.argv[3], int(sys.argv[4])) #device, host, port
 	elif sys.argv[1].upper()=="SERIALFORMATBRIDGE":
 		serial_format_bridge(sys.argv[2], int(sys.argv[3]), sys.argv[4], sys.argv[5]) #device, port, target device, module
+	elif sys.argv[1].upper()=="HELP": #show help
+		if len(sys.argv)==3:
+			if sys.argv[2].upper()=="DEVINFO":
+				os.system("cat ../doc/devinfo")
+		else:
+			os.system("cat ../doc/help")
 	else:
-		throw_error(11, 'No arguments specified', 0)
+		throw_error(11, 'No arguments specified; Use "serpint.py help" for information', 0)
 		raw_input('Press enter to close')
 except BaseException as e:
 	if str(e)=='1': #When you call sys.exit it throws an exiterror, this makes it so it doesnt keep bloating the traceback
 		throw_error(12, 'Exiterror, this is normal')
 	else:
-		throw_error(11,e) #This is a error meaning that the command line arguments werent interpereted correctly
+		throw_error(11,str(e)+"\nUse 'serpint.py help' for information") #This is a error meaning that the command line arguments werent interpereted correctly
 
 
