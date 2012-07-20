@@ -1,0 +1,18 @@
+Scratch Sensor Board Design License
+
+Copyright (c) 2007 Massachusetts Institute of Technology
+
+All Rights Reserved.
+
+Scratch and the Scratch Sensor Board were developed by Lifelong Kindergarten group at the MIT Media Lab. See scratch.mit.edu.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of the Scratch Sensor Board design, including the schematic diagram, printed circuit board design files, firmware source code, and accompanying documentation (the "Design"), to use, copy, modify, merge, publish, produce, or distribute hardware based on the Design or designs derived from it ("Derivative Works"), and to permit persons to whom the Design is furnished to do so, subject to the following conditions:
+
+  1. The above copyright notice and this permission notice shall be included in all copies of the Design and Derivative Works. When distributing hardware based on the Design or Derivative Works, it is sufficient to include a URL to a public website with this information.
+
+  2. The phrase "Scratch Sensor Board" shall not be used to refer to Derivative Works. Phrases such as "Compatible with Scratch" or "Works with Scratch" are permitted provided that such phrases are not used to imply that MIT endorses you or the Derivative Work. 
+
+  3. The schematic diagram, printed circuit board design files, and firmware source code for any Derivative Work based on the Design shall be made readily available to the public, ideally on a public web site, free of charge.
+
+THE DESIGN IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE DESIGN OR THE USE OR OTHER DEALINGS IN THE DESIGN.
+
