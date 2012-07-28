@@ -84,7 +84,7 @@ def loop_master_connection(conn): #Run the master GPIO command interpereter over
 			ext=recvo(conn) #recive pin to read from
 			try:
 				print "Reading value from pin "+str(ext)
-				sendb(conn, gpio.input(ext)) #read value and send
+				sendb(conn, int(gpio.input(ext))) #read value and send
 				sendb(conn, 10) 
 			except BaseException as e:
 				throw_error(4,e,0) #Throw error, send 0 value in place of being read, send 11 so they know an error occoured, not just value is 0
