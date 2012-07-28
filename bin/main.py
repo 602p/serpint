@@ -16,8 +16,11 @@
 #    GNU General Public License for more details.
 #
 
+ver=14
+
 print "SERPINT NETWORK GPIO TOOLKIT"
-print "PLEASE USE ^C IF YOU NEED TO FORCE EXIT, ONLY USE ^Z IF YOU WANT TO EXIT WITHOUT CLEANUP"
+print "           V"+ver+"             "
+#print "PLEASE USE ^C IF YOU NEED TO FORCE EXIT, ONLY USE ^Z IF YOU WANT TO EXIT WITHOUT CLEANUP"
 print
 
 try:
@@ -41,20 +44,27 @@ def recvo(conn, num=1, q=0): #read num bytes, then run ord() on them, and report
 	except BaseException as e:
 		throw_error(10,e) #RX (reciving) error
 
+def master_connection_init(conn):
+	while 1:
+		i=recvo(conn)
+		if i==2:
+			break
+	thread.interrupt_main()
+
 def loop_master_connection(conn): #Run the master GPIO command interpereter over the socket conn
 	run=1
 	got_OK=0
 	n=0
-	while not got_OK: #Loop until connected
-		n=n+1
-		print "CONNECTING (TRY "+str(n)+")"
-		sendb(conn, 1, 1) #Send a 1 (acknowlage me!)
-		time.sleep(1)
-		i=recvo(conn, 1, 1) #Check for
-		if i==2: #2, whitch is acknowlaged
-			got_OK=1 #Exit loop
-			print
-			print "got OK, client is connected"
+	try:
+		thread.start_new_thread(master_connection_init, (conn,))
+		while not got_OK: #Loop until connected
+			n=n+1
+			print "CONNECTING (TRY "+str(n)+")"
+			sendb(conn, 1, 1) #Send a 1 (acknowlage me!)
+			time.sleep(4)
+	except KeyboardInterrupt:
+		print "Got OK, client connected"
+		sendb(conn,10)
 	while run:
 		#recive command
 		command=recvo(conn)
