@@ -1,13 +1,19 @@
 #! /usr/bin/env python
 
 print "SERPINT NETWORK GPIO TOOLKIT"
-print "           V31              "
+print "           V32              "
 print
 
 import sys, os
 cmd=""
 for i in sys.argv[1:]:cmd=cmd+" "+i
-os.system("sudo -p 'Please Enter Your Password, To Authorize Serpint: ' python main.py"+cmd)
+path=""
+f=__file__.split("/")
+del f[len(f)-1]
+for i in f:
+	path=path+i+"/"
+path=path.replace("./", "", 1)
+os.system("cd '"+path+"'; sudo -p 'Please Enter Your Password, To Authorize Serpint: ' python main.py"+cmd)
 print
 print "To clean up your system, run ./serpint cleanup"
 print "EXIT"
