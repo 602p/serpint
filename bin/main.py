@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 
-ver=24
+ver=25
 
 print "SERPINT NETWORK GPIO TOOLKIT"
 print "           V"+str(ver)+"             "
@@ -259,6 +259,11 @@ try:
 				if z!="":
 					print "Cleaning port /dev/"+i.strip("\n")+" ..."
 					remove_vsi(i.strip('\n'))
+		print "The following TCP/IP sockets are open:"
+		print
+		os.system("netstat|grep tcp")
+		print
+		print
 		print "Done"
 	elif sys.argv[1].upper()=="HELP": #show help
 		if len(sys.argv)==3:
