@@ -39,5 +39,8 @@ serpint help [option]
 serpint cleanup
 	This command cleans up (removes) all virtual serial
 	ports on the system.
+
+serpint demo
+	This command shows a demo of some of what serpnt can do
 	
 =============================================================
