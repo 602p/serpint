@@ -16,12 +16,7 @@
 #    GNU General Public License for more details.
 #
 
-ver=29
 
-print "SERPINT NETWORK GPIO TOOLKIT"
-print "           V"+str(ver)+"             "
-#print "PLEASE USE ^C IF YOU NEED TO FORCE EXIT, ONLY USE ^Z IF YOU WANT TO EXIT WITHOUT CLEANUP"
-print
 
 try:
 	import socket, os, time, thread, sys, imp, gpio #This uses RPi.GPIO 1.0 so I dont have to compile it

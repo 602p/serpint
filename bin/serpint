@@ -1,4 +1,9 @@
 #! /usr/bin/env python
+
+print "SERPINT NETWORK GPIO TOOLKIT"
+print "           V30              "
+print
+
 import sys, os
 cmd=""
 for i in sys.argv[1:]:cmd=cmd+" "+i
