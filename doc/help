@@ -42,5 +42,8 @@ serpint cleanup
 
 serpint demo
 	This command shows a demo of some of what serpnt can do
+
+serpint removeport port
+	This command removes [closes] the TCPIP port port
 	
 =============================================================

@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 
-ver=26
+ver=27
 
 print "SERPINT NETWORK GPIO TOOLKIT"
 print "           V"+str(ver)+"             "
@@ -283,6 +283,7 @@ try:
 			print "Killing process "+pid
 			os.system("sudo kill -9 "+pid.strip("/"))
 		print "Done"
+		print "In some cases, the port will take 30s-120s to close now that the process has been terminated"
 	elif sys.argv[1].upper()=="HELP": #show help
 		if len(sys.argv)==3:
 			if sys.argv[2].upper()=="DEVINFO":
