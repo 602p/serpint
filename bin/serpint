@@ -2,7 +2,7 @@
 import sys, os
 cmd=""
 for i in sys.argv[1:]:cmd=cmd+" "+i
-os.system("sudo python main.py"+cmd)
+os.system("sudo -p 'Please Enter Your Password, To Authorize Serpint: ' python main.py"+cmd)
 print
 print "To clean up your system, run ./serpint cleanup"
 print "EXIT"
