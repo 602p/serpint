@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 
-ver=19
+ver=20
 
 print "SERPINT NETWORK GPIO TOOLKIT"
 print "           V"+str(ver)+"             "
