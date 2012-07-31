@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 
-ver=15
+ver=19
 
 print "SERPINT NETWORK GPIO TOOLKIT"
 print "           V"+str(ver)+"             "
@@ -261,9 +261,11 @@ try:
 	elif sys.argv[1].upper()=="HELP": #show help
 		if len(sys.argv)==3:
 			if sys.argv[2].upper()=="DEVINFO":
-				os.system("cat ../doc/devinfo")
+				os.system("cat ../doc/devinfo | more")
+			if sys.argv[2].upper()=="SFBINFO":
+				os.system("cat ../doc/sfbinfo | more")
 		else:
-			os.system("cat ../doc/help")
+			os.system("cat ../doc/help | more")
 			
 	else:
 		throw_error(11, 'No arguments specified; Use "serpint.py help" for information', 0)

@@ -33,6 +33,7 @@ serpint help [option]
 	This command displays help about serpint, optionally
 	in the category option (one out of this list:
 		devinfo
+		sfbinfo
 	.)
 
 serpint cleanup
