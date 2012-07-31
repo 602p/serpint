@@ -234,6 +234,15 @@ def throw_error(errorno, debug, die=1): #report errors, errorno is the error of 
 	print "Error detail text: "+errors[errorno]
 	print "Debug information: "+str(debug)
 	print "-"*60
+	
+	os.system("date >>err")
+	os.system("echo "+("-"*60)+" >>err")
+	os.system("echo "+"An error occoured, Error No. "+str(errorno)+" >>err")
+	os.system("echo "+"Error detail text: "+errors[errorno]+" >>err")
+	os.system("echo "+"Debug information: "+str(debug)+" >>err")
+	os.system("echo "+("-"*60)+" >>err")
+	os.system("echo >>err")
+	
 	if die: sys.exit(1)
 
 try:
@@ -337,6 +346,6 @@ try:
 		throw_error(11, 'No arguments specified; Use "serpint.py help" for information', 0)
 		raw_input('Press enter to close')
 except BaseException as e:
-	throw_error(11,str(e)+"\nUse 'serpint.py help' for information") #This is a error meaning that the command line arguments werent interpereted correctly
+	throw_error(11,str(e)+"----Use 'serpint.py help' for information") #This is a error meaning that the command line arguments werent interpereted correctly
 
 
