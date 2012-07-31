@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 
-ver=25
+ver=26
 
 print "SERPINT NETWORK GPIO TOOLKIT"
 print "           V"+str(ver)+"             "
@@ -264,6 +264,24 @@ try:
 		os.system("netstat|grep tcp")
 		print
 		print
+		print "Done"
+		
+	elif sys.argv[1].upper()=="REMOVEPORT":
+		print "Removing port..."
+		l=os.popen("sudo netstat -ap | grep :"+str(sys.argv[2])).readlines()
+		for i in l:
+			n=len(i)-1
+			while i[n]!="/":
+				#print i[n]
+				n=n-1
+			pid=""
+			while i[n]!=" ":
+				pid=pid+i[n]
+				n=n-1
+			pid=pid.strip("/").replace("/", "")
+			pid=pid[::-1]
+			print "Killing process "+pid
+			os.system("sudo kill -9 "+pid.strip("/"))
 		print "Done"
 	elif sys.argv[1].upper()=="HELP": #show help
 		if len(sys.argv)==3:
