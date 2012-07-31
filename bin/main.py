@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 
-ver=21
+ver=22
 
 print "SERPINT NETWORK GPIO TOOLKIT"
 print "           V"+str(ver)+"             "
@@ -175,6 +175,7 @@ def ser_to_sock_a(ser, sock): #read information from ser and write it to sock
 			i=ser.read(1)
 			print "Just relayed "+str(ord(i))+" from serial to socket"
 			if ord(i) in [3,4]:
+				sock.send(i)
 				print "Thread A ready for exit"
 				break
 			sock.send(i)
@@ -188,6 +189,7 @@ def ser_to_sock_b(ser, sock): #read information from sock and write it to ser
 			i=sock.recv(1)
 			print "Just relayed "+str(ord(i))+" from socket to serial"
 			if ord(i) in [3,4]:
+				ser.write(i)
 				print "Thread B ready for exit"
 				print "Interrupting main thread"
 				thread.interrupt_main()
