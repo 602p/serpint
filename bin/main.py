@@ -272,13 +272,17 @@ try:
 		l=os.popen("sudo netstat -ap | grep :"+str(sys.argv[2])).readlines()
 		for i in l:
 			n=len(i)-1
-			while i[n]!="/":
-				#print i[n]
-				n=n-1
-			pid=""
-			while i[n]!=" ":
-				pid=pid+i[n]
-				n=n-1
+			try:
+				while i[n]!="/":
+					#print i[n]
+					n=n-1
+				pid=""
+				while i[n]!=" ":
+					pid=pid+i[n]
+					n=n-1
+			except BaseException:
+				print
+				break
 			pid=pid.strip("/").replace("/", "")
 			pid=pid[::-1]
 			print "Killing process "+pid
