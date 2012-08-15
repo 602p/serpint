@@ -264,9 +264,9 @@ try:
 				if z!="":
 					print "Cleaning port /dev/"+i.strip("\n")+" ..."
 					remove_vsi(i.strip('\n'))
-		print "The following TCP/IP sockets are open:"
+		print "The following TCP/IP sockets are open: [filtered to the local-loopback (mostly-serpint) ports]"
 		print
-		os.system("netstat|grep tcp")
+		os.system("netstat|grep tcp|grep localhost")
 		print
 		print
 		print "Done"
