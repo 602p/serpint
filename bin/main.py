@@ -65,6 +65,7 @@ def loop_master_connection(conn): #Run the master GPIO command interpereter over
 		command=recvo(conn)
 		if command==3: #3 is shutdown
 			sendb(conn, 4) #4 is shutting down
+			sendb(conn, 5)#tell the relay (if existant) to shut down
 			conn.close()
 			run=0
 		elif command==22: #22 is initilize pin as output
@@ -169,9 +170,11 @@ def ser_to_sock_a(ser, sock): #read information from ser and write it to sock
 			time.sleep(0.1)
 			i=ser.read(1)
 			print "Just relayed "+str(ord(i))+" from serial to socket"
-			if ord(i) in [3,4]:
-				sock.send(i)
+			if ord(i) == 5:
+				#sock.send(i)
 				print "Thread A ready for exit"
+				print "Interrupting main thread"
+				thread.interrupt_main()
 				break
 			sock.send(i)
 		except BaseException as e:
@@ -183,11 +186,9 @@ def ser_to_sock_b(ser, sock): #read information from sock and write it to ser
 			time.sleep(0.1)
 			i=sock.recv(1)
 			print "Just relayed "+str(ord(i))+" from socket to serial"
-			if ord(i) in [3,4]:
-				ser.write(i)
+			if ord(i) == 5:
+				#ser.write(i)
 				print "Thread B ready for exit"
-				print "Interrupting main thread"
-				thread.interrupt_main()
 				break
 			ser.write(i)
 		except BaseException as e:
