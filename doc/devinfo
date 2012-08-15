@@ -3,6 +3,7 @@
 2: OK, Beginning
 3: Shutdown
 4: OK, Shutting Down
+5: Relay should shut down
 10:OK
 11:Error
 22:Initilize next byte pin as input
