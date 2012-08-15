@@ -8,7 +8,7 @@
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License
+#    the Free Software Foundation, version 3 of the License
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -186,10 +186,6 @@ def ser_to_sock_b(ser, sock): #read information from sock and write it to ser
 			time.sleep(0.1)
 			i=sock.recv(1)
 			print "Just relayed "+str(ord(i))+" from socket to serial"
-			if ord(i) == 5:
-				#ser.write(i)
-				print "Thread B ready for exit"
-				break
 			ser.write(i)
 		except BaseException as e:
 			throw_error(2,e)
