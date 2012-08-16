@@ -224,7 +224,7 @@ def throw_error(errorno, debug, die=1): #report errors, errorno is the error of 
 		, "ERROR3_NETWORK_RELAY_THREAD_A", "ERROR4_GPIO_ERROR", "ERROR5_CREATE_VSI", "ERROR6_CREATE_VSI_SYSTEM"\
 		, "ERROR7_NETWORK_RELAY_INIT", "ERROR8_VSI_SHUTDOWN", "ERROR9_SOCKET_TX", "ERROR10_SOCKET_RX"\
 		, "ERROR11_CLA_INTERP", "ERROR12_EXIT_ERROR"]
-	if str(debug) in ["", "1", "\nUse 'serpint.py help' for information", "1----Use 'serpint.py help' for information"]:
+	if str(debug) in ["", "1", "\nUse './serpint help' for information", "1----Use './serpint help' for information"]:
 		return
 	print "-"*60
 	print "An error occoured, Error No. "+str(errorno)
@@ -338,9 +338,9 @@ try:
 		raw_input()
 		print "Exiting"
 	else:
-		throw_error(11, "No arguments specified; Use 'serpint.py help' for information", 0)
+		throw_error(11, "No arguments specified; Use './serpint.py' for information", 0)
 		raw_input('Press enter to close')
 except BaseException as e:
-	throw_error(11,str(e)+"----Use 'serpint.py help' for information") #This is a error meaning that the command line arguments werent interpereted correctly
+	throw_error(11,str(e)+"----Use './serpint help' for information") #This is a error meaning that the command line arguments werent interpereted correctly
 
 
