@@ -290,13 +290,7 @@ try:
 		print "Done"
 		print "In some cases, the port will take 30s-120s to close now that the process has been terminated"
 	elif sys.argv[1].upper()=="HELP": #show help
-		if len(sys.argv)==3:
-			if sys.argv[2].upper()=="DEVINFO":
-				os.system("cat ../doc/devinfo | more")
-			if sys.argv[2].upper()=="SFBINFO":
-				os.system("cat ../doc/sfbinfo | more")
-		else:
-			os.system("cat ../doc/help | more")
+		os.system("ooffice ../doc/main.odt")
 	elif sys.argv[1].upper()=="DEMO": #give a demo
 		print "This is a demo"
 		#print "When it pauses, press enter, and in any popup windows that ask for your password, give it to them"

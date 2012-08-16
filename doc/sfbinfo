@@ -1,2 +1,0 @@
-SFB stands for Serial Format Bridge.
-It allows a user of serpint to control the GPIO from a different program, or protocall. It creates a "bridge" between two serial ports, with a piece of python code in the center. Included are two examples. The first, called "sfb_reporter" is a script that when it recives information over the serial port, it tells you what the current state of the GPIO pins are. The second one is called "sfb_scratchboard." It simulates a scratchboard.
