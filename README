@@ -1,4 +1,9 @@
-This code is under the licence licence/licence.txt
-This code cannot be used in the Raspberry Pi 2012 Summer Code Competition
+SERPINT
+
+Serpint is a toolkit for controlling the GPIO (general pourpouse input/output) pins on a Raspberry PI <raspberrypi.org>. The software is writted in python. The main functions of serpint have to do with controlling the pins as if they were a serial/USB device {1}. It can also be used to controll the GPIO pins over a network. Another use is reformatting the control of the GPIO pins so that the serial device {1} controlling them emulates a different device [say, a scratchboard (example included).] However, as the source code of serpint is avalable (it is not a compiled/compilable application) I hope that many other people will make use of/ make new uses for it.
+
+For more documentation, see doc/main.odt
+
+{1} Serpint can emulate any device connecting on a /dev/ttyS port, /dev/ttyUSB is currently untested
 
 Louis Goessling <louis@goessling.com> wrote the code
