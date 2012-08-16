@@ -293,6 +293,8 @@ try:
 		os.system("ooffice ../doc/main.odt")
 	elif sys.argv[1].upper()=="DEMO": #give a demo
 		print "This is a demo"
+		print "For a explanation of this demo, open doc/demo.odt"
+		raw_input("(Press Enter)")
 		#print "When it pauses, press enter, and in any popup windows that ask for your password, give it to them"
 		print
 		print "Now starting the GPIOTOSERIAL command"
