@@ -341,7 +341,7 @@ try:
 		print "Exiting"
 	elif sys.argv[1].upper()=="MOO":
 		print """
-	        		/----\
+                               /----\
                        -------/      \
                       /               \
                      /                |

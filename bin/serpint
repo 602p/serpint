@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 print "SERPINT NETWORK GPIO TOOLKIT"
-print "           V47              "
+print "           V48              "
 print
 
 import sys, os
