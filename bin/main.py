@@ -340,15 +340,15 @@ try:
 		raw_input()
 		print "Exiting"
 	elif sys.argv[1].upper()=="MOO":
-		print """
-                               /----\
-                       -------/      \
-                      /               \
-                     /                |
-   -----------------/                  --------\
-   ----------------------------------------------
-What is it? Its an elephant beaing eaten by a serpint, of course
-		(google 'aptitude moo')"""
+		print 
+		print "                             /----\\"
+		print "                     -------/      \\"
+		print "                    /               \\"
+		print "                   /                |"
+		print "	-----------------/                  --------\\"
+		print "----------------------------------------------"
+		print "What is it? Its an elephant beaing eaten by a serpint, of course"
+		print "		(google 'aptitude moo')"
 	else:
 		throw_error(11, "No arguments specified; Use './serpint.py' for information", 0)
 		raw_input('Press enter to close')
