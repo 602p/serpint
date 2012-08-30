@@ -16,7 +16,7 @@ class _GetchUnix:
         return ch
 
 import pyserial as serial
-import time, sys
+import time, sys, os
 
 print "Welcome to the SERPINT test program."
 print "This program expects that you have followed the instructions in doc/demo.odt"
@@ -42,12 +42,36 @@ port.write(chr(7))
 while 1:
 	key=getch()
 	if key==" ":
-		print "Toggling..."
+		os.system("clear")
 		state= not state
 		if state:
 			port.write(chr(25))
 			port.write(chr(7))
+			print """
+   OOOO       NN         N
+  O    O      N  N       N
+ O       O    N   N      N                 Connect your volt meter between pin 4
+O         O   N    N     N                 [http://elinux.org/images/2/2a/GPIOs.png]
+O         O   N     N    N                 And ground
+O         O   N      N   N                           IT SHOULD READ 2.5V
+O         O   N       N  N
+ O       O    N        N N
+   O    O     N         NN
+    000O      N          N
+    """
 		else:
+			print """
+   OOOO       FFFFFFFFFFF  FFFFFFFFFFFF
+  O    O      F            F
+ O       O    F            F               Connect your volt meter between pin 4
+O         O   FFFFFFFFFFF  FFFFFFFFFFFF    [http://elinux.org/images/2/2a/GPIOs.png]
+O         O   F            F               And ground
+O         O   F            F                         IT SHOULD READ 0V
+O         O   F            F
+ O       O    F            F
+   O    O     F            F
+    000O      F            F
+    """
 			port.write(chr(26))
 			port.write(chr(7))
 	if key=="q":

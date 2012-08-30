@@ -1,5 +1,5 @@
 print "SERPINT NETWORK GPIO TOOLKIT"
-print "          V1.0.2a          "
+print "          V1.0.3          "
 print
 
 import sys, os
