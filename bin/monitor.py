@@ -43,7 +43,7 @@ while 1:
 	key=getch()
 	if key==" ":
 		print "Toggling..."
-		state=!state
+		state= not state
 		if state:
 			port.write(chr(25))
 			port.write(chr(7))
