@@ -55,7 +55,7 @@ O         O   N    N     N                 [http://elinux.org/images/2/2a/GPIOs.
 O         O   N     N    N                 And ground
 O         O   N      N   N                           IT SHOULD READ 2.5V
 O         O   N       N  N
- O       O    N        N N
+ O       O    N        N N                              github.com/602p/serpint
    O    O     N         NN
     000O      N          N
     """
@@ -69,7 +69,7 @@ O         O   F            F               And ground
 O         O   F            F                         IT SHOULD READ 0V
 O         O   F            F
  O       O    F            F
-   O    O     F            F
+   O    O     F            F                            github.com/602p/serpint
     000O      F            F
     """
 			port.write(chr(26))

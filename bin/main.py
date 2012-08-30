@@ -108,7 +108,7 @@ def loop_master_connection(conn): #Run the master GPIO command interpereter over
 		elif command==26: #26 is turn pin off
 			ext=recvo(conn) #recive pin# to turn off
 			try:
-				print "Turning pin "+str(ext)+" on"
+				print "Turning pin "+str(ext)+" off"
 				gpio.output(ext, 0) #turn off
 				sendb(conn, 10)
 			except BaseException as e:
