@@ -291,54 +291,6 @@ try:
 		print "In some cases, the port will take 30s-120s to close now that the process has been terminated"
 	elif sys.argv[1].upper()=="HELP": #show help
 		os.system("ooffice ../doc/main.odt")
-	elif sys.argv[1].upper()=="DEMO": #give a demo
-		print "This is a demo"
-		print "For a explanation of this demo, open doc/demo.odt"
-		raw_input("(Press Enter)")
-		#print "When it pauses, press enter, and in any popup windows that ask for your password, give it to them"
-		print
-		print "Now starting the GPIOTOSERIAL command"
-		print "Running './serpint gpiotoserial ttyS44 1234'"
-		os.system("gnome-terminal -x sudo ./serpint gpiotoserial ttyS44 1234 &")
-		#time.sleep(3)
-		time.sleep(4)
-		print "That window is waiting for a connection."
-		print "Now connecting..."
-		print "Running './serping serialtosock ttyS44 1235'"
-		os.system("gnome-terminal -x sudo ./serpint serialtosock ttyS44 1235 &")
-		time.sleep(4)
-		print "Now connecting to socket 1235 from python"
-		s = None
-		for res in socket.getaddrinfo('localhost', 1235, socket.AF_UNSPEC, socket.SOCK_STREAM):
-		    af, socktype, proto, canonname, sa = res
-		    try:
-			s = socket.socket(af, socktype, proto)
- 		    except socket.error, msg:
-			s = None
-			continue
- 		    try:
-			s.connect(sa)
-		    except socket.error, msg:
-			s.close()
-			s = None
-			continue
-		sock=s
-		print 'Connected, sending an ok (0x02)'
-		sock.send(chr(2))
-		print 'Got back 0x'+str(hex(int(ord(sock.recv(1)))))
-		print 'Connected and online! [Will close automatically in 20s] :)'
-		time.sleep(20)
-		print 'Closing'
-		sock.send(chr(3))
-		sock.recv(1)
-		sock.close()
-		print "Please close any other open windows, then press enter"
-		raw_input()
-		print "Cleaning up"
-		print "Running './serpint cleanup'"
-		os.system("gnome-terminal -x sudo ./serpint cleanup")
-		raw_input()
-		print "Exiting"
 	elif sys.argv[1].upper()=="MOO":
 		print 
 		print "                             /----\\"
