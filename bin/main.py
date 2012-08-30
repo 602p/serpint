@@ -349,6 +349,9 @@ try:
 		print "----------------------------------------------"
 		print "What is it? Its an elephant beaing eaten by a serpint, of course"
 		print "		(google 'aptitude moo')"
+	elif sys.argv[1].upper()=="MONITOR":
+		print "Launching..."
+		os.system("sudo python monitor.py")
 	else:
 		throw_error(11, "No arguments specified; Use './serpint.py' for information", 0)
 		raw_input('Press enter to close')
