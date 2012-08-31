@@ -7,7 +7,7 @@ Part one of the demo will show you the capability of serpint to control the GPIO
 For Part One You Will Need....
 
 1. A Raspberry Pi with Screen and Keyboard
-2. A way to check GPIO voltages (Voltimiter, LED)
+2. A way to check GPIO voltages (Voltmeter, LED)
 3. Serpint (Download from http://github.com/602p/serpint)
 
 For Part Two You Will need
