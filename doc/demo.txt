@@ -37,13 +37,15 @@ NOTE: It will continue tring to connect UNTIL you do STEP 3! DO STEP 3 ASAP!
 PART 2 [OPTIONAL]
 This tests the networking functionality of serpint
 
+Part 2 is a lot more complicated. You are doing the same thing as in part one, but instead of just connecting to the serial port you create, you link it over a network to another serial port. That way data going in Port 1 comes out Port 2, and data goingin Port 2 comes out Port1. This is called a serial port connection.
+
 1. On your raspberry pi.... Cd to the bin directory of the serpint folder
 2. Run
 ./serpint gpiotoserial ttyS55 5555
 This will allow the GPIO pins to be controlled over the serial port ttyS44
 3. Run 
 ./serpint serialtosock ttyS55 5556
-This will forward all traffic from the serial port ttyS55
+This will act as the first half of the serial port connection
 NOTE: IT WILL SAY “WAITING FOR REMOTE CONNECTION”, DONT WORRY, THIS WILL GO AWAYIN STEP 6
 4. Make note of your raspberry pi's IP address (you can find this out by doing 
 sudo ifconfig|grep “inet addr” 
@@ -52,7 +54,7 @@ sudo ifconfig|grep “inet addr”
 6. Cd to the bin folder and run 
 ./serpint socktoserial ttyS56 192.168.1.7 5556
 You will want to replace 192.168.1.7 with the IP address that you got in step 3
-This will make a serial port ttyS56, from the data sent when you started the code in step 3
+This will act as the second half of  the serial port connection
 NOTE: THE PROGRAM WILL EXIT. THIS IS NORMAL. IT STARTS A DAEMON AND EXITS
 7. ON THE SECOND COMPUTER...Open a new tab/tty and run the built-in serial monitor
 ./serpint monitor
