@@ -1,0 +1,65 @@
+Demo
+
+To run the demo of serpint, follow these instructions.... 
+
+Part one of the demo will show you the capability of serpint to control the GPIO pins over a serial port. Part 2 will also show you the same thing can be done over a network. The serial monitor that you run has NO GPIO library loaded, only a standard serial library.
+
+For Part One You Will Need....
+
+1. A Raspberry Pi with Screen and Keyboard
+2. A way to check GPIO voltages (Voltimiter, LED)
+3. Serpint (Download from http://github.com/602p/serpint)
+
+For Part Two You Will need
+
+1. Another computer (running linux)
+2. A connection between them, on the same network
+3. Serpint on the other computer
+
+PART 1
+This tests the GPIO control over serial functionality of serpint
+
+                                    IN A TERMINAL
+1. On your raspberry pi.... Cd to the bin directory of the serpint folder
+2. Run
+./serpint gpiotoserial ttyS44 4444
+This will allow the GPIO pins to be controlled over the serial port ttyS44
+NOTE: It will continue tring to connect UNTIL you do STEP 3! DO STEP 3 ASAP!
+3. Open a new tab/tty and run the built-in serial monitor
+./serpint monitor
+4. In the monitor, enter your serial port as /dev/ttyS44
+5. Attach a voltimeter or light to gpio pins 4 and ground [ see http://elinux.org/images/2/2a/GPIOs.png]
+6. Press space in the monitor to toggle the power to pin 4
+7. When done, press q to quit the monitor
+8. Run 
+./serpint cleanup
+
+PART 2 [OPTIONAL]
+This tests the networking functionality of serpint
+
+1. On your raspberry pi.... Cd to the bin directory of the serpint folder
+2. Run
+./serpint gpiotoserial ttyS55 5555
+This will allow the GPIO pins to be controlled over the serial port ttyS44
+3. Run 
+./serpint serialtosock ttyS55 5556
+This will forward all traffic from the serial port ttyS55
+NOTE: IT WILL SAY “WAITING FOR REMOTE CONNECTION”, DONT WORRY, THIS WILL GO AWAYIN STEP 6
+4. Make note of your raspberry pi's IP address (you can find this out by doing 
+sudo ifconfig|grep “inet addr” 
+(you’ll want the top one)) You’ll need this in step 5
+5. On another (linux) computer, download serpint
+6. Cd to the bin folder and run 
+./serpint socktoserial ttyS56 192.168.1.7 5556
+You will want to replace 192.168.1.7 with the IP address that you got in step 3
+This will make a serial port ttyS56, from the data sent when you started the code in step 3
+NOTE: THE PROGRAM WILL EXIT. THIS IS NORMAL. IT STARTS A DAEMON AND EXITS
+7. ON THE SECOND COMPUTER...Open a new tab/tty and run the built-in serial monitor
+./serpint monitor
+8. In the monitor, enter your serial port as /dev/ttyS56
+9. Attach a voltimeter or light to gpio pins 4 and ground [ see http://elinux.org/images/2/2a/GPIOs.png]
+10. Press space in the monitor to toggle the power to pin 4
+11. When done, press q to quit the monitor
+12. Run 
+./serpint cleanup 
+on bolth machines

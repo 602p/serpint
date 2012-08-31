@@ -1,0 +1,37 @@
+Commands for serpint
+
+serpint gpiotoserial serial port
+	This command starts a GPIOINTERP processor on the
+	serial port serial (i.e. ttyS44) and using the port
+	port (i.e. 4444) as a loopback port
+
+serpint serialtosock serial port
+	This command forwards data going to/from the serial
+	port serial (i.e. ttyS44) to the socket port (i.e.
+	4445)
+
+serpint socktoserial serial host port
+	This command creates a virtual serial port from the
+	data coming over the socket host:port (from a call
+	to serpint.py serialtosock)
+
+serpint serialformatbridge serial port
+ serial2 module
+	This command creates a bridge from serial (i.e. 
+	ttyS45) to serial2 (i.e. ttyS46) over port port 
+	(i.e. 4446) using the sfb format module module (i.e.
+	/home/pi/Desktop/serpint/sfb/sfb_scratch.py)
+
+serpint help [option]
+	This command displays help about serpint, optionally
+	in the category option (one out of this list:
+		devinfo
+		sfbinfo
+	.)
+
+serpint cleanup
+	This command cleans up (removes) all virtual serial
+	ports on the system.
+
+serpint removeport port
+	This command removes [closes] the TCPIP port port

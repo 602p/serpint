@@ -1,0 +1,16 @@
+                                                                           SERPINT
+Serpint is software for controlling the GPIO pins on the Rasperry Pi over a socket or serial port, and that reformattably over a network.
+
+It can be used to control the GPIO pins from languages that don't already have a GPIO library, but do for sockets or serial, or from programs that expect a serial port, and to do that from half a world away.
+	
+
+	Serpint is a toolkit for controlling the GPIO (general pourpouse input/output) pins on a Raspberry PI <raspberrypi.org>. The software is writted in python. The main functions of serpint have to do with controlling the pins as if they were a serial device1. It can also be used to controll the GPIO pins over a network. Another use is reformatting the control of the GPIO pins so that the serial device controlling them emulates a different device [say, a scratchboard (example included).] However, as the source code of serpint is avalable (it is not a compiled/compilable application) I hope that many other people will make use of/ make new uses for it.
+	The main function of serpint (of whitch most others are extentions) is the gpiotoserial command. It creates a virtual serial port/device that is being controlled by a python script. This allows you to control the gpio pins as if they were a serial device. Through that serial port you then can turn pins on and off, and read their values.
+	The 2nd and 3rd functions of serpint come as a pair, allowing you to have a link between a serial port on one machine, and a serial port on another. This allows you to remotely control the GPIO pins on your raspberry pi. This could be used for example, to allow you to put the raspberry pi and some sensors on the roof and read the wind speed and barometric pressure form downstairs.
+	The 4th use of serpint allows you to reformat the data flowing out of a serial port, allowing it to emulate other serial devices. This could be used to have the GPIO pins emulate a scratchboard (example included.)
+
+For instructions on using serpint, read commands.odt
+
+For details on how to use the gpiotoserial command and the reformatting, refer to doc/devinfo
+
+ 1Serpint can emulate any device connecting on a /dev/ttyS port, /dev/ttyUSB is currently untested 

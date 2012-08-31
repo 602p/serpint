@@ -53,7 +53,7 @@ while 1:
  O       O    N   N      N                 Connect your volt meter between pin 4
 O         O   N    N     N                 [http://elinux.org/images/2/2a/GPIOs.png]
 O         O   N     N    N                 And ground
-O         O   N      N   N                           IT SHOULD READ 2.5V
+O         O   N      N   N                         IT SHOULD READ 2.5V TO 3V
 O         O   N       N  N
  O       O    N        N N
    O    O     N         NN                        github.com/602p/serpint
